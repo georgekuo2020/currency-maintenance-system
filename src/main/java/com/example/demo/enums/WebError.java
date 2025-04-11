@@ -6,7 +6,9 @@ import java.util.Map;
 
 public enum WebError {
 
-    NO_STATUS(-1, "無狀態");
+    NO_STATUS(-1, "無狀態"),
+    CURRENCY_ID_NOT_FOUND(1000, "幣別 ID 不存在"),
+    CURRENCY_CODE_AlREADY_EXISTS(1001, "幣別代碼 已存在");
 
     private final Integer code;
     private final String message;
