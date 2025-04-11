@@ -19,10 +19,10 @@ public class CoinDeskClient {
     @Value("${coin.desk.api.version}")
     private String coinDeskApiVersion;
 
-    private final RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     @Autowired
-    public CoinDeskClient(RestTemplate restTemplate) {
+    public void setRestTemplate(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
