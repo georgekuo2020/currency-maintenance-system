@@ -9,9 +9,9 @@ public class SuccessfullyResponse<T> extends BaseResponse {
 
     public T data;
 
-    public SuccessfullyResponse(T data) {
+    public SuccessfullyResponse(String message, T data) {
         this.statusCode = 200;
-        this.message = "success";
+        this.message = message;
         this.data = data;
     }
 }
