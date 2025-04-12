@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -69,11 +72,15 @@ public class CoinDeskCurrencyInfoResponse {
     @AllArgsConstructor
     public static class Bpi {
         @JsonProperty("USD")
-        private CurrencyInfo USD;
+        private CurrencyInfo usd;
         @JsonProperty("GBP")
-        private CurrencyInfo GBP;
+        private CurrencyInfo gbp;
         @JsonProperty("EUR")
-        private CurrencyInfo EUR;
+        private CurrencyInfo eur;
+
+        public List<CurrencyInfo> getAllCurrencyInfo() {
+            return Arrays.asList(usd, gbp, eur);
+        }
     }
 
     @Data

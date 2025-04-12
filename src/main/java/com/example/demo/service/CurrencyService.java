@@ -10,6 +10,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Service
 @Log4j2
 public class CurrencyService {
@@ -47,9 +51,9 @@ public class CurrencyService {
     /**
      * 更新 幣別
      *
-     * @param currencyId    幣別 id
-     * @param currencyCode  幣別 代號
-     * @param currencyName  幣別 中文名
+     * @param currencyId   幣別 id
+     * @param currencyCode 幣別 代號
+     * @param currencyName 幣別 中文名
      * @return Currency
      */
     public Currency updateCurrency(String currencyId, String currencyCode, String currencyName) {
@@ -104,5 +108,11 @@ public class CurrencyService {
      */
     public boolean isCurrencyCodeExists(String currencyCode) {
         return currencyRepository.findByCurrencyCodeAndIsDelete(currencyCode, false) != null;
+    }
+
+    public Map<String, Currency> getAllCurrencyMap() {
+        List<Currency> allCurrencies = currencyRepository.findAllByIsDelete(false);
+        return allCurrencies.stream()
+                .collect(Collectors.toMap(Currency::getCurrencyCode, currency -> currency));
     }
 }
