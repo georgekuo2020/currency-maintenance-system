@@ -8,7 +8,6 @@ import com.example.demo.vo.CoinDeskCurrencyInfoResponse;
 import com.example.demo.vo.CoinDeskVO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.format.DateTimeFormatters;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

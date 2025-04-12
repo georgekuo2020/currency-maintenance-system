@@ -38,6 +38,17 @@ public class CurrencyController {
                 new SuccessfullyResponse<>("幣別新增成功", currency));
     }
 
+    @Operation(summary = "使用 id 查詢幣別", description = "")
+    @GetMapping("/query")
+    public ResponseEntity<BaseResponse> query(
+            @RequestParam(name = "id", defaultValue = "77bfcf73cfb24b76ae5137506f4a9529") String id) {
+
+        Currency currency = currencyService.getCurrencyById(id);
+
+        return ResponseEntity.ok(
+                new SuccessfullyResponse<>("查詢成功", currency));
+    }
+
     @Operation(summary = "幣別清單", description = "")
     @GetMapping("/list")
     public ResponseEntity<BaseResponse> list(
