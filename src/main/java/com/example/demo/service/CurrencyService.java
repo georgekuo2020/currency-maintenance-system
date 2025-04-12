@@ -74,6 +74,21 @@ public class CurrencyService {
     }
 
     /**
+     * 根據 id 查詢 幣別
+     *
+     * @param currencyId 幣別 id
+     * @return Currency
+     */
+    public Currency getCurrencyById(String currencyId) {
+        Currency currency = currencyRepository.findByIdAndIsDelete(currencyId, false);
+        if (currency == null) {
+            log.error("Currency with id {} not found", currencyId);
+            throw new CustomizeException(WebError.CURRENCY_ID_NOT_FOUND);
+        }
+        return currency;
+    }
+
+    /**
      * 查詢 所有幣別
      *
      * @param page 當前頁碼
