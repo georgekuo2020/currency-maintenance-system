@@ -1,7 +1,10 @@
 package com.example.demo;
 
 import com.example.demo.entity.Currency;
+import com.example.demo.service.CoinDeskService;
 import com.example.demo.service.CurrencyService;
+import com.example.demo.util.Constants;
+import com.example.demo.vo.CoinDeskVO;
 import com.example.demo.vo.CurrencyCreationVO;
 import com.example.demo.vo.CurrencyUpdateVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +19,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.Mockito.when;
@@ -33,6 +40,9 @@ public class CurrencyServiceTest {
 
     @MockBean
     private CurrencyService currencyService;
+
+    @MockBean
+    private CoinDeskService coinDeskService;
 
     /**
      * 1.查詢 幣別對應表資料 API 功能測試
@@ -160,6 +170,34 @@ public class CurrencyServiceTest {
                 .perform(
                         delete("/currency/v1/delete")
                                 .param("currency_id", id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .characterEncoding("UTF-8")
+                                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.statusCode").value("200"));
+    }
+
+    @Test
+    @DisplayName("GET_COIN_DESK_DATA")
+    void getCoinDeskData() throws Exception {
+
+        // =========    Arrange     ==========
+        String nowTimeString = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Constants.WEB_DATE_FORMAT));
+        List<CoinDeskVO.CurrencyVO> currencyVOList = Arrays.asList(
+                CoinDeskVO.CurrencyVO.createInstance("USD", "美金", "1.00", 1.0),
+                CoinDeskVO.CurrencyVO.createInstance("EUR", "歐元", "0.85", 0.85)
+        );
+        // 設定 Mock Service 的行為
+        when(coinDeskService.getCoinDeskData()).thenReturn(CoinDeskVO.createInstance(nowTimeString, currencyVOList));
+
+        // ==========      Act      ===========
+        // ==========     Assert    ===========
+        // 執行及比對
+        mockMvc
+                .perform(
+                        get("/coinDesk/v1/getData")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .characterEncoding("UTF-8")
                                 .accept(MediaType.APPLICATION_JSON))
