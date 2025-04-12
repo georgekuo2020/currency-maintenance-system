@@ -1,6 +1,5 @@
 package com.example.demo.config;
 
-import lombok.extern.log4j.Log4j2;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.UUIDGenerator;

@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CurrencyRepository extends JpaRepository<Currency, String> {
 
@@ -14,4 +16,6 @@ public interface CurrencyRepository extends JpaRepository<Currency, String> {
     Currency findByCurrencyCodeAndIsDelete(String currencyCode, boolean isDelete);
 
     Page<Currency> findByIsDelete(boolean isDelete, Pageable pageable);
+
+    List<Currency> findAllByIsDelete(boolean isDelete);
 }

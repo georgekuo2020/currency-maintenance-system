@@ -52,7 +52,7 @@ public class CurrencyController {
 
     @Operation(summary = "更新幣別", description = "")
     @PatchMapping("/update")
-    public ResponseEntity<BaseResponse> create(
+    public ResponseEntity<BaseResponse> update(
             @RequestBody CurrencyUpdateVO currencyUpdateVO) {
 
         Currency currency = currencyService.updateCurrency(currencyUpdateVO.getCurrencyId(),

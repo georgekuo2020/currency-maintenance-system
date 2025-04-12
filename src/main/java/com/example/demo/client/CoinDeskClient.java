@@ -27,7 +27,7 @@ public class CoinDeskClient {
     }
 
     /**
-     * 取的 幣別匯率 資訊
+     * 取的 幣別 & 匯率 資訊
      *
      * @return CoinDeskCurrencyInfoResponse
      */
