@@ -53,7 +53,7 @@ public class CoinDeskClient {
         }
     }
 
-    private String getBaseUrl() {
+    public String getBaseUrl() {
         return coinDeskHost + "/" + coinDeskApiVersion;
     }
 }
