@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <properties>
+        <property name="LOG_HOME">logs</property>
+        <property name="LOG_NAME">currency-maintenance-system</property>
+        <property name="LOG_ARCHIVE_PATH">${LOG_HOME}/archive</property>
+
+        <Property name="logSize">20 MB</Property>
+        <Property name="commonLayoutPattern">%style{%d}{normal,white,dim} %highlight{%-5level}[%style{%t}{normal,Magenta}] %style{[SessionID:%X{sessionId}]}{normal,white,dim} %style{---}{normal,white,dim} %style{%c{1.}}{normal,blue} - %m %n</Property>
+    </properties>
+    <Appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="${commonLayoutPattern}"/>
+        </Console>
+        <RollingRandomAccessFile name="logfile"
+                                 fileName="${LOG_HOME}/${LOG_NAME}.log"
+                                 filePattern="${LOG_ARCHIVE_PATH}/${LOG_NAME}.log.%d{yyyy-MM-dd}">
+            <PatternLayout pattern="${commonLayoutPattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${logSize}"/>
+            </Policies>
+            <!-- 刪除策略配置 -->
+            <DefaultRolloverStrategy max="100">
+                <Delete basePath="${LOG_ARCHIVE_PATH}" maxDepth="1">
+                    <IfFileName glob="*.log.gz"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <AsyncLogger name="com.example.demo" level="debug" additivity="false">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="logfile"/>
+        </AsyncLogger>
+        <asyncRoot level="info" includeLocation="true">
+            <appender-ref ref="STDOUT"/>
+        </asyncRoot>
+    </Loggers>
+</Configuration>
